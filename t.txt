@@ -1,0 +1,13 @@
+if(isset($_POST['submit'])){
+$list = $_POST['todoList'];
+$user_id = "1";
+
+$insert = "INSERT INTO todo(list,user_id)VALUES('$list','$user_id');
+
+if(mysqli_query($link,$insert)){
+echo "todo added successfully"
+}else{
+echo "todo not added"
+}
+
+}
