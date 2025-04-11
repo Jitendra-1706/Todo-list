@@ -14,18 +14,21 @@ if(empty($_SESSION['id'])){
 if (isset($_POST['submit'])) {
   $list = $_POST['todoList'];
   $user_id = $_SESSION['id'];
+  $tid = $_GET['id'];
+  $insert = "UPDATE todo SET list= '$list' WHERE id='$tid'";
+  
 
-  $insert = "INSERT INTO todo(list,user_id)VALUES('$list','$user_id')";
+//   $insert = "INSERT INTO todo(list,user_id)VALUES('$list','$user_id')";
 
   if (mysqli_query($link, $insert)) {
-    echo "todo added successfully";
+   header("Location: index.php");
   } else {
     echo "todo not added";
   }
 }
 
-if (isset($_GET['delete'])) {
-  $id = $_GET['id'];
+if (isset($_POST['delete'])) {
+  $id = $_POST['id'];
 
   $delete = "DELETE FROM todo WHERE id = '$id' ";
 
@@ -55,7 +58,7 @@ if (isset($_GET['delete'])) {
   <div class="container-fluid">
  
       <form class="d-flex justify-content-end w-100" role="search">
-        <button class="btn btn-info mx-3 me-5" type="submit">Logout</button>
+        <button class="btn btn-success mx-3 me-5" type="submit">Logout</button>
         <!-- <button class="btn btn-outline-info mx-3" type="submit">Log in</button> -->
       </form>
   </div>
@@ -66,13 +69,13 @@ if (isset($_GET['delete'])) {
       <div class="col-sm-12 col-md-4">
         <div class="card">
           <div class="card-body">
-            <form class="d-flex align-items-center justify-content-between" action="" method="post">
+            <!-- <form class="d-flex align-items-center justify-content-between" action="" method="post">
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" name="todoList" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput">Todo</label>
               </div>
               <button type="submit" name="submit" value="submit" class="btn btn-warning">Add</button>
-            </form>
+            </form> -->
 
             <div>
 
@@ -80,17 +83,18 @@ if (isset($_GET['delete'])) {
 
                 <?php
                 $uid =   $user_id = $_SESSION['id'];
-                $select = "SELECT * FROM todo WHERE user_id = $uid";
+                $todo_id = $_GET['id'];
+                $select = "SELECT * FROM todo WHERE user_id = $uid && id = $todo_id";
 
                 if ($result = mysqli_query($link, $select)) {
                   if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_array($result)) { ?>
 
                       <div class="d-flex align-items-center justify-content-between my-2">
-                        <li><?php echo $row['list'] ?></li>
-                        <form action="" method="get">
+                          <form action="" method="post">
+                        <li><input type="text" name="todoList" value="<?php echo $row['list'] ?>"></li>
                           <input type="text" name="id" value="<?php echo $row['id'] ?>" style="display: none;">
-                          <a class="btn btn-success" href="edit-todo.php?id= <?php echo $row['id'];?>" >Edit</a>
+                            <input type="submit" name="submit" class="btn btn-primary" >
                           <button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Are you sure to delete this' )">Delete</button>
 
                         </form>
