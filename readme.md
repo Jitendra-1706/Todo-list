@@ -24,6 +24,8 @@ A full-stack web application of todo list to make notes or to set reminder what 
 ## 📸 Screenshots
 
 assets/
+![alt text](<assets/images/Screenshot 2025-04-14 221628.png>)
+![alt text](<assets/images/Screenshot 2025-04-14 221729.png>)
 
 ---
 
