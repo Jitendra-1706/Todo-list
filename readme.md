@@ -1,4 +1,4 @@
-# 📊 Personal Budget Tracker
+# 📊 Todos list app
 
 A full-stack web application of todo list to make notes or to set reminder what you need to do today. Built with PHP and MySQL, it includes user authentication, and a clean Bootstrap-powered UI.
 
